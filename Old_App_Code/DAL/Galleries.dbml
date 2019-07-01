@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Amburer" Class="GalleriesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=Amburer;Persist Security Info=True;User ID=sa;MultipleActiveResultSets=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="AmburerConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Galleries" Member="Galleries">
+    <Type Name="Galleries">
+      <Column Name="Code" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="MediaFile" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="HCGalleryCatCode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="HCMediaTypeCode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.vGalleries" Member="vGalleries">
+    <Type Name="vGalleries">
+      <Column Name="Code" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="CatName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="MediaFile" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="MediaType" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="HCGalleryCatCode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="HCMediaTypeCode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

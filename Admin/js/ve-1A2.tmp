@@ -1,0 +1,495 @@
+﻿function DeleteItem(FileName, MasterCode, DelList)
+{
+	AskResult = confirm("حذف شود ؟")
+
+	if(AskResult){
+		window.onbeforeunload = '';
+		window.location.href=FileName + '?DelList=' + DelList + '&Code=' + MasterCode
+	}
+}
+function PrintJournal()
+{
+	window.print()
+}
+
+function IsOnlyNumber()
+{
+
+var returnValue = false;
+var keyCode = (window.event.which) ? window.event.which : window.event.keyCode;
+if ( ((keyCode >= 48) && (keyCode <= 57)) ||
+(keyCode == 8) || 
+(keyCode == 9) || 
+(keyCode == 46) || 
+(keyCode == 45) || 
+(keyCode == 13) ) 
+returnValue = true;
+
+if ( window.event.returnValue )
+window.event.returnValue = returnValue;
+return returnValue;
+}
+function IsOnlyNumberAndSlash()
+{
+var returnValue = false;
+var keyCode = (window.event.which) ? window.event.which : window.event.keyCode;
+if ( ((keyCode >= 47) && (keyCode <= 57)) ||
+(keyCode == 8) || 
+(keyCode == 9) || 
+(keyCode == 13) ) 
+returnValue = true;
+
+if ( window.event.returnValue )
+window.event.returnValue = returnValue;
+
+return returnValue;
+}
+
+
+function ConfirmUnload()
+{
+    event.returnValue = "تغییرات نادیده گرفته شود؟";
+}
+function GetInfo(InputObj, BaseID)
+{
+	Code = InputObj.value
+	document.body.style.cursor='wait';
+	
+	// Create an instance of the XML HTTP Request object
+	var oXMLHTTP = new ActiveXObject( "Microsoft.XMLHTTP" );
+		
+	// Prepare the XMLHTTP object for a HTTP POST to our validation ASP page
+	var sURL = "../Seminars/GetInfo.asp?Code=" + Code + '&BaseID=' + BaseID
+	oXMLHTTP.open( "POST", sURL, false );
+	
+	// Execute the request
+	oXMLHTTP.send();
+	
+	rsl = oXMLHTTP.responseText
+	InputObj.parentNode.parentNode.cells(2).childNodes(0).value = rsl
+	if(rsl == 'رکورد مورد نظر یافت نشد')
+		InputObj.parentNode.parentNode.cells(1).childNodes(0).value = ''
+	document.body.style.cursor='auto';
+	
+}
+function ImgOver(ImgObj)
+{
+	ImgObj.style.borderWidth = 1
+	ImgObj.style.borderColor = 'black'
+}
+function ImgOut(ImgObj)
+{
+	ImgObj.style.borderWidth = 0
+}
+
+function DoPrint()
+{
+	window.print()
+}
+function AskDelete(Code)
+{
+	AskResult = confirm("رکورد حذف شود؟")
+	if(AskResult){
+		form1.DelValue.value = Code;
+		form1.action = "index.asp"
+		form1.submit()
+	}
+}
+
+function AskDeleteDetail(FromAction, MasterCode, Code)
+{
+	AskResult = confirm("رکورد حذف شود؟")
+	if(AskResult){
+		window.onbeforeunload = '';
+		form1.DelList.value = Code;
+		form1.Code.value = MasterCode ;
+		form1.action = FromAction
+		form1.submit()
+	}
+}
+
+function GotoLink(FormAction)
+{
+	if( FormAction != "undefined")
+		form1.action = FormAction
+	form1.submit();
+}
+
+function GotoUrl(Url)
+{
+    window.location.href = Url
+}
+
+function PickDate(DateFieldName, InitVal, Section)
+{
+	InitVal = InitVal.replace("/", "");
+	InitVal = InitVal.replace("/", "");
+	
+	X =  window.event.clientX
+	Y =  window.event.clientY + 100
+	if ( InitVal.length != 8)
+		InitVal = '';
+	whn = 	window.open('../DatePicker.asp?FFN=' + DateFieldName + '&InitDate=' + InitVal + '&Section=' + Section,'DatePicker','width=200,height=185,menubar=no,status=no,titlebar=no,resizable=no,top=' + Y + ',left=' + X );
+}
+
+function UploadPic(FileName)
+{
+		whList = window.open(FileName + '?' + FieldName + '=' +  Code,'','width=580,height=150,menubar=no,status=no,titlebar=no,resizable=no,top=200,left=150');
+}
+
+function ShowTree(FileName, BaseID, FFN, InitCode)
+{
+		whList = window.open(FileName + '?BaseID=' + BaseID + '&FFN=' + FFN + '&InitGroup=' + InitCode,'PersonTree','width=580,height=450,menubar=no,status=no,titlebar=no,resizable=no,top=200,left=150');
+}
+
+function ShowFile(FileName, FieldName, Code)
+{
+		whList = window.open(FileName + '?' + FieldName + '=' +  Code,'','width=620,height=450,menubar=no,status=no,titlebar=no,resizable=no,scrollbars,top=200,left=150');
+}
+
+function ShowFile3(FileName, FieldName, Code)
+{
+		whList = window.open(FileName + '?' + FieldName + '=' +  Code,'','width=620,height=450,menubar=yes,status=no,titlebar=no,resizable=no,scrollbars,top=200,left=150');
+}
+
+function ShowFile2(PathName)
+{
+	whList = window.open(PathName,'','width=620,height=450,menubar=no,status=no,titlebar=no,resizable=no,scrollbars,top=200,left=150');
+}
+
+function ShowSizedFile(FileName, FieldName, Code,w, h)
+{
+	whList = window.open(FileName + '?' + FieldName + '=' +  Code,'','width='+ w + ',height=' + h + ',menubar=no,status=no,titlebar=no,resizable=no,top=200,left=150');
+}
+
+function OpenList(BaseID, ImgObj)
+{
+    ShowMode = 'List';
+    FormFieldCode = ImgObj.parentNode.parentNode.parentNode.parentNode.rows[0].cells[1].childNodes[0];
+    FormFieldName = ImgObj.parentNode.parentNode.parentNode.parentNode.rows[0].cells[0].childNodes[0];
+    BrowseObj1.CreateBrowse(BaseID, ShowMode);
+    //BrowseObj = new XMLBrowse(BaseID, ShowMode);
+
+//	whList = window.open('../List.aspx?BaseID=' + BaseID + '&FFC=' + FormFieldCode + '&FFN=' + FormFieldName ,'','scrollbars=yes, width=650,height=450,menubar=no,status=no,titlebar=no,resizable=yes,top=200,left=150');
+}
+
+function OpenListMaster(BaseID, ImgObj, MasterCode)
+{
+    if(MasterCode == '')
+    {
+        alert('لطفا ابتدا شرکت بیمه را انتخاب کنید')
+        return false;
+    }
+        FormFieldCode = ImgObj.parentNode.parentNode.parentNode.parentNode.rows[0].cells[1].childNodes[0].name;
+        FormFieldName = ImgObj.parentNode.parentNode.parentNode.parentNode.rows[0].cells[0].childNodes[0].name;
+
+		whList = window.open('../List.aspx?MasterCode=' + MasterCode + '&BaseID=' + BaseID + '&FFC=' + FormFieldCode + '&FFN=' + FormFieldName ,'','scrollbars=yes, width=650,height=450,menubar=no,status=no,titlebar=no,resizable=yes,top=200,left=150');
+}
+
+function OpenTree(BaseID, ImgObj)
+{
+        FormFieldCode = ImgObj.parentNode.parentNode.parentNode.parentNode.rows[0].cells[1].childNodes[0].name;
+        FormFieldName = ImgObj.parentNode.parentNode.parentNode.parentNode.rows[0].cells[0].childNodes[0].name;
+
+		whList = window.open('../GetTree.aspx?GetVal=1&BaseID=' + BaseID + '&FFC=' + FormFieldCode + '&FFN=' + FormFieldName ,'','width=450,height=450,menubar=no,status=no,titlebar=no,resizable=no,top=200,left=150');
+}
+
+function OpenTree2(BaseID, Width, Height,GroupCode)
+{
+		whList = window.open('../GetTree.aspx?MultiSelect=1&BaseID=' + BaseID + '&GroupCode=' + GroupCode ,'','width=' + Width + ',height=' + Height + ',menubar=no,status=no,titlebar=no,resizable=no,top=200,left=150');
+}
+
+function List2(BaseID, FormFieldName,Section, FN, FV)
+{
+		whList = window.open('../Admin/List.asp?BaseID=' + BaseID + '&FFN=' + FormFieldName + '&Section=' + Section + '&FN=' + FN + '&FV=' + FV,'','width=450,height=450,menubar=no,status=no,titlebar=no,resizable=no,top=200,left=150');
+}
+
+function ListMulti(BaseID, FormFieldName,Section)
+{
+		whList = window.open('../Admin/ListMulti.asp?BaseID=' + BaseID + '&FFN=' + FormFieldName + '&Section=' + Section ,'','width=450,height=450,menubar=no,status=no,titlebar=no,resizable=no,top=200,left=150');
+}
+
+
+function ShowList(FileName, BaseID, FilterCols, FilterVals)
+{
+	if(FilterCols == undefined)
+		FilterCols = ""
+	if(FilterVals == undefined)
+		FilterVals = ""
+		whList = window.open(FileName + '?BaseID=' + BaseID + '&FN=' + FilterCols + '&FV=' + FilterVals,'','width=500,height=450,menubar=no,status=no,titlebar=no,resizable=no,top=200,left=150');
+}
+
+function GetLeftCenter(WinHeight, WinHeight)
+{
+
+	if (screen.width == 1024)
+	{
+		RTop = (768 - WinHeight) / 2
+		Result = "top=" + RTop + ",left=213"
+	}
+	else
+	{
+		RTop = (600 - WinHeight) / 2
+		Result = "top=" + RTop + ",left=20"
+	}
+		return Result
+}
+
+
+
+function ShowBrowse(BaseID, MasterID, Section)
+{
+	if(MasterID == '')
+		alert('ابتدا ذخیره کنید')
+	else
+			//window.location.href = '../Browse.aspx?BaseID=' + BaseID + '&MasterCode=' + MasterID + '&Section=' + Section;
+			whList = window.open('../BrowsePopup.aspx?BaseID=' + BaseID + '&MasterCode=' + MasterID + '&Section=' + Section,'','width=790,height=420,menubar=no,status=no,titlebar=no,scrollbars,resizable=no,top=200,left=150');
+}
+
+function ShowGeneralList(BaseID, MasterID, Section)
+{
+	if(MasterID == '')
+		alert('ابتدا ذخیره کنید')
+	else
+			whList = window.open('../GeneralList.asp?BaseID=' + BaseID + '&MasterCode=' + MasterID + '&Section=' + Section,'','width=700,height=370,menubar=no,status=no,titlebar=no,resizable=no,scrollbars,top=200,left=150');
+}
+
+
+function ShowPics(BaseID, MasterID, MediaType)
+{
+		whList = window.open('Album.asp?BaseID=' + BaseID + '&MasterCode=' + MasterID + '&MediaType=' + MediaType,'','width=600,height=510,menubar=no,status=no,titlebar=no,resizable=no,top=100,left=150');
+}
+
+function DoMask(MaskFormat, str,textbox,loc,delim)
+{
+//	try{
+	
+	DoNothing = 0
+
+	CurrentPos = textbox.value.length;
+	var locs = loc.split(',');	
+
+	KeyCode = event.keyCode
+	if (!window.event.shiftKey && !window.event.ctrlKey && !window.event.altKey) {
+		if ((KeyCode > 47 && KeyCode < 58) || (KeyCode > 95 && KeyCode < 106)) {
+			MaxL = MaskFormat.length + locs.length 
+			if (textbox.value.length >= MaxL) {
+					event.returnValue = false
+					return false;
+			}
+			if (KeyCode > 95) KeyCode -= (95-47);
+		} else if (KeyCode != 8 && KeyCode != 46 ) {
+			event.returnValue = false
+			return false;
+		}
+	}
+
+	CurrentChar = String.fromCharCode(KeyCode)
+
+	for (var i = 0; i <= locs.length; i++){
+		for (var k = 0; k <= str.length; k++){
+		 if (k == locs[i]){
+		  if (str.substring(k, k+1) != delim){
+		    str = str.substring(0,k) + delim + str.substring(k,str.length)
+			textbox.value = str
+		  }
+		 }
+		}
+	 }
+
+	if(CurrentPos < MaskFormat.length + locs.length)
+	{
+		if(MaskFormat.charAt(CurrentPos) == 'N')
+		{
+			if( !isNaN(CurrentChar))
+			{
+				DoNothing = 0
+			}
+			else
+			{
+				DoNothing = 1
+			}
+		}
+		else if(MaskFormat.charAt(CurrentPos) == '/')
+		{
+			if( CurrentChar == '/')
+			{
+				DoNothing = 0
+			}
+			else
+			{
+				DoNothing = 1
+			}
+		}
+		else if(MaskFormat.charAt(CurrentPos) == 'L')
+		{
+			if( !isNaN(CurrentChar))
+			{
+				DoNothing = 1
+			}
+			else
+			{
+				DoNothing = 0
+			}
+		}
+
+	}	
+	else
+		DoNothing = 1
+	
+
+	if(DoNothing == 1)
+		event.keyCode = 0
+	return true;
+//	}
+//	catch(e)
+//	{
+//	}
+}
+
+
+function OpenDate(DivObj)
+{
+    //InitVal = TDObj.parentNode.parentNode.parentNode.parentNode.rows[0].cells[0].childNodes[0].name;
+    InitVal = DivObj.parentNode.parentNode.childNodes[1].childNodes[0].value;
+    FFN = DivObj.parentNode.parentNode.childNodes[1].childNodes[0].name;
+	InitVal = InitVal.replace("/", "");
+	InitVal = InitVal.replace("/", "");
+	X =  window.event.clientX 
+	Y =  window.event.clientY
+	if ( InitVal.length != 8)
+		InitVal = '';
+
+
+    DatePan.style.left = X - 32 + document.body.scrollLeft;
+    DatePan.style.top = Y + 2 + document.body.scrollTop + document.documentElement.scrollTop;
+    DatePan.style.display = "block"
+    //window.resizeTo(X + DatePan.offsetWidth,Y + DatePan.offsetHeight)
+    //document.body.scrollIntoView(true)
+    
+}
+
+
+var http_request = null;
+var DelObj = null;
+function startRequest(url, Func, Method, Param, UpdateObj) { 
+    DelObj = UpdateObj;
+    if (window.XMLHttpRequest) { 
+       http_request = new XMLHttpRequest(); 
+    } 
+    else if (window.ActiveXObject) { 
+       http_request = new ActiveXObject('Microsoft.XMLHTTP'); 
+    } 
+    url = url + '&rnd=' + Math.random();
+    http_request.onreadystatechange = Func;
+    http_request.open(Method, url, true); 
+    if( Method == 'GET')
+       http_request.send(null); 
+    else
+       http_request.send(Param); 
+} 
+
+function DelComplete()
+{
+    if(http_request != null)
+    {
+       if (http_request.readyState == 4) { 
+           if (http_request.status == 200) { 
+	            result = http_request.responseText
+	            if(result == "Success")
+	                DelObj.style.display = 'none';
+	            else
+	                alert(result);
+	            document.body.style.cursor='auto';
+            }
+       }
+   }
+}
+
+
+function CallPrint(strid)
+{
+ var prtContent = document.getElementById(strid);
+ var WinPrint = window.open('','','letf=0,top=0,width=1,height=1,toolbar=0,scrollbars=1,status=0');
+ WinPrint.document.write("<link href=\"../styles/main.css\" rel=\"stylesheet\" type=\"text/css\">" +  prtContent.innerHTML);
+ WinPrint.document.close();
+ WinPrint.focus();
+
+//alert(WinPrint.document.getElementById("ctl00_cphMain_tblList").offsetHeight)
+WinPrint.resizeTo(document.getElementById("ctl00_cphMain_tblList").offsetWidth + 30,document.getElementById("ctl00_cphMain_tblList").offsetHeight + 180 );
+ WinPrint.print();
+ WinPrint.close();
+}
+
+function OpenWin(Link, Width, Height)
+{
+//	X =  window.event.clientX
+//	Y =  window.event.clientY + 100
+//alert(screen.width)
+leftVal = (screen.width - Width) / 2;
+topVal = (screen.height - Height) / 2;
+
+	window.open(Link,'','width=' + Width + ',height=' + Height + ',menubar=no,status=no,titlebar=no,scrollbars=yes,resizable=no,top=' + topVal + ',left=' + leftVal );
+}
+function ResizeWin()
+{
+    MainEditObj = document.getElementById('dvMainEdit');
+    var w=MainEditObj.offsetWidth;
+    var h=MainEditObj.offsetHeight;
+    alert(h)
+    if ((w!=null) && (h!=null))
+    {
+    window.resizeTo(w,h);
+//    var winX = (screen.width - w) / 2;
+//    var winY = (screen.height - h) / 2;
+//    window.moveTo(winX,winY);
+    }
+
+}
+
+function OnClicking(sender, eventArgs)
+{ 
+	if (eventArgs.Item.Value != "") 
+	{
+	    switch(eventArgs.Item.Value)
+	    {
+	        case "Persons":
+	            window.location.href = '../Persons';
+	            break;
+	        case "Countries":
+	            window.location.href = '../Countries';
+	            break;
+	        case "Parties":
+	            window.location.href = '../Parties';
+	            break;
+	        case "News":
+	            window.location.href = '../News';
+	            break;
+	        default :
+	        {
+	            if(eventArgs.Item.Value != undefined)
+	                window.location.href = '../Main/Default.aspx?BaseID=' + eventArgs.Item.Value
+        	    //BrowseObj1.CreateBrowse(eventArgs.Item.Value)
+	        }
+	    } 
+	    return false;
+	}
+} 
+
+function ShowHideTop()
+{
+    TopObj = document.getElementById('TopHeader')
+    if(TopObj.style.display != 'none')
+    {
+        TopObj.style.display = 'none'
+        document.getElementById('TDMainTD').className = ''
+        document.getElementById('TDMain').className = 'cTblMainTD2'
+    }
+    else
+    {
+        TopObj.style.display = 'block'
+        document.getElementById('TDMainTD').className = 'cTblMainTD'
+        document.getElementById('TDMain').className = 'cTblMainEdit'
+    }            
+    
+}
